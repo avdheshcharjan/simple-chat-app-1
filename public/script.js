@@ -1,45 +1,12 @@
 const socket = io();
 let username;
 
-const isSlashCommand = (message) => {
-    return message.startsWith("/");
-};
-
-const handleSlashCommand = (message) => {
-    const [command, ..._] = message.split(" ");
-    switch (command) {
-        case "/help":
-            alert(
-                "Available commands:\n" +
-                "/help - Show this message\n" +
-                "/random - Print a random number\n" +
-                "/clear - Clear the chat"
-            );
-            break;
-        case "/random":
-            const rNum = Math.random()
-            const newRandomNumDiv = document.createElement("div");
-            newRandomNumDiv.className = "quote received";
-            newRandomNumDiv.textContent = "Here's your random number: " + rNum;
-            appendChatMessage(newRandomNumDiv);
-            break;
-        case "/clear":
-            const messagesDiv = document.querySelector(".messages");
-            messagesDiv.innerHTML = "";
-            break;
-        default:
-            alert("Unknown command: " + command);
-            break;
-    }
-    return true;
-
-};
 
 const sendMessage = () => {
     const messageInput = document.getElementById("messageInput");
     let message = messageInput.value;
 
-    const replacements = {
+    const emojis = {
         react: "⚛",
         woah: "😮",
         hey: "👋",
@@ -47,13 +14,13 @@ const sendMessage = () => {
         like: "❤️",
         congratulations: "🎉",
     };
-
+    //created a JSON object here! 
     // hey world => ["hey","world"]
     // Split message into words and replace
     let words = message.split(" ");
     for (let i = 0; i < words.length; i++) {
-        if (replacements[words[i]]) {
-            words[i] = replacements[words[i]];
+        if (emojis[words[i]]) {
+            words[i] = emojis[words[i]];
         }
     }
 
